@@ -16,6 +16,8 @@ This folder contains configuration files (dotfiles) for customizing your Unix-li
   - **Bash completion:** Enables tab completion for many commands.
   - **Default editor:** Sets `vim` as the default editor.
 
+> **Note:** After editing `.bashrc`, reload your shell or run `source ~/.bashrc` to activate changes.
+
 ---
 
 ## 🐚 .zshrc
@@ -27,6 +29,8 @@ This folder contains configuration files (dotfiles) for customizing your Unix-li
   - **Prompt:** Username (green), git branch (cyan), working directory (blue), arrow (cyan).
   - **Git branch in prompt:** Uses `vcs_info` to show the current git branch.
   - **Conda initialization:** Activates conda environments and shows them in the prompt.
+
+> **Note:** After editing `.zshrc`, reload your shell or run `source ~/.zshrc` to activate changes.
 
 ---
 
@@ -42,6 +46,8 @@ This folder contains configuration files (dotfiles) for customizing your Unix-li
   - **Status line:** Shows file info, type, position, and length.
   - **(Optional) Mouse and clipboard:** Can enable mouse and system clipboard support.
 
+> **Note:** After editing `.vimrc`, restart Vim to see the changes.
+
 ---
 
 ## 🖥️ .tmux.conf
@@ -54,6 +60,8 @@ This folder contains configuration files (dotfiles) for customizing your Unix-li
   - **Status bar:** Shows at the bottom, with date and time, and custom colors.
   - **Vi mode:** Enables vi-style keybindings in copy mode.
   - **Pane/window management:** Easy splitting and navigation.
+
+> **Note:** After editing `.tmux.conf`, reload the config in tmux with `<prefix> + r` or restart tmux.
 
 ---
 
@@ -70,6 +78,30 @@ This will copy your existing dotfiles into the `dotfiles` folder for version con
 
 ---
 
+## ⚡ Activating Changes
+
+To apply changes after editing your dotfiles, use the following commands or actions:
+
+```sh
+# For .bashrc
+source ~/.bashrc   # or restart your terminal
+
+# For .zshrc
+source ~/.zshrc    # or restart your terminal
+
+# For .vimrc
+# Restart Vim to see the changes
+
+# For .tmux.conf
+# Inside tmux, press <prefix> + r to reload, or restart tmux
+tmux source-file ~/.tmux.conf
+```
+
+> **Tip:** Always reload or restart the relevant application or shell after editing its config file to ensure your changes take effect.
+
+
+---
+
 ## How to Use
 
 1. Copy these files to your home directory (or symlink them for version control).
@@ -77,5 +109,4 @@ This will copy your existing dotfiles into the `dotfiles` folder for version con
 3. Open a new terminal or Vim/tmux session to see the changes.
 
 Feel free to further customize these files to match your workflow!
-
 

@@ -11,6 +11,16 @@ alias ll="ls -alt"
 alias la="ls -l"
 alias tmux='tmux -u -2'
 
+# Git aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate --all'
+alias gd='git diff'
+alias gb='git branch'
+alias gco='git checkout'
+
 # Prompt and git branch info
 autoload -U colors && colors
 autoload -Uz vcs_info
@@ -37,3 +47,5 @@ unset __conda_setup
 
 # (Optional) If you want to always have conda in PATH, uncomment below:
 # export PATH="$HOME/miniconda3/bin:$PATH"
+
+
