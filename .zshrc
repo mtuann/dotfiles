@@ -1,0 +1,39 @@
+# Homebrew initialization (only if Homebrew is installed)
+if [ -f /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Color support and aliases
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+alias ls='ls -GF'
+alias ll="ls -alt"
+alias la="ls -l"
+alias tmux='tmux -u -2'
+
+# Prompt and git branch info
+autoload -U colors && colors
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%F{cyan}(%b)'
+zstyle ':vcs_info:*' enable git
+setopt PROMPT_SUBST
+PROMPT="%B%F{green}%n\$vcs_info_msg_0_%f:%F{blue}%3~  %F{cyan}->  %b%f"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# (Optional) If you want to always have conda in PATH, uncomment below:
+# export PATH="$HOME/miniconda3/bin:$PATH"
