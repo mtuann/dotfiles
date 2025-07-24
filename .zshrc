@@ -21,6 +21,14 @@ alias gd='git diff'
 alias gb='git branch'
 alias gco='git checkout'
 
+# History settings (equivalent to Bash .bashrc)
+HISTSIZE=10000
+SAVEHIST=2000
+HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt APPEND_HISTORY
+
 # Prompt and git branch info
 autoload -U colors && colors
 autoload -Uz vcs_info

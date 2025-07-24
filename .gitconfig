@@ -1,0 +1,13 @@
+[user]
+	name = mtuann
+	email = mtuann4@gmail.com
+[color]
+	ui = auto
+[core]
+	editor = vim
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	cm = commit
+	lg = log --oneline --graph --decorate --all 

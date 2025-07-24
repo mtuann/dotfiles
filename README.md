@@ -4,6 +4,30 @@ This folder contains configuration files (dotfiles) for customizing your Unix-li
 
 ---
 
+## 🚀 Quick Install (setup.sh)
+
+Clone this repository and run the setup script to install dependencies and copy dotfiles to your home directory:
+
+```sh
+cd ~/Desktop/work/dotfiles
+chmod +x ~/setup.sh
+sh setup.sh
+```
+
+The script will:
+- Install Homebrew (if not already installed)
+- Install git, zsh, vim, and tmux
+- Copy .bashrc, .vimrc, .zshrc, .tmux.conf, and .gitconfig to your home directory
+
+After running the script, restart your terminal or run:
+
+```sh
+source ~/.zshrc   # for zsh
+source ~/.bashrc  # for bash
+```
+
+---
+
 ## 🐚 .bashrc
 
 - **Shell configuration for bash**
@@ -98,7 +122,6 @@ tmux source-file ~/.tmux.conf
 ```
 
 > **Tip:** Always reload or restart the relevant application or shell after editing its config file to ensure your changes take effect.
-
 
 ---
 
