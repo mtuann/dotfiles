@@ -10,14 +10,17 @@ Clone this repository and run the setup script to install dependencies and copy 
 
 ```sh
 cd ~/Desktop/work/dotfiles
-chmod +x ~/setup.sh
-sh setup.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
-The script will:
-- Install Homebrew (if not already installed)
-- Install git, zsh, vim, and tmux
+**The script will:**
+- Detect your OS (macOS or Ubuntu/Debian)
+- Install Homebrew (if not already installed) and required packages on macOS
+- Install required packages using apt on Ubuntu/Debian
 - Copy .bashrc, .vimrc, .zshrc, .tmux.conf, and .gitconfig to your home directory
+
+> For other Linux distributions, please install git, zsh, vim, and tmux manually, then run the script to copy dotfiles.
 
 After running the script, restart your terminal or run:
 
