@@ -3,6 +3,11 @@ if [ -f /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# UV (Python package manager) initialization
+if [ -f "$HOME/.local/bin/env" ]; then
+  . "$HOME/.local/bin/env"
+fi
+
 # Color support and aliases
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -20,6 +25,12 @@ alias gl='git log --oneline --graph --decorate --all'
 alias gd='git diff'
 alias gb='git branch'
 alias gco='git checkout'
+
+# UV aliases
+alias uvvenv='uv venv'
+alias uvrun='uv run'
+alias uvsync='uv sync'
+alias uvadd='uv add'
 
 # History settings (equivalent to Bash .bashrc)
 HISTSIZE=10000

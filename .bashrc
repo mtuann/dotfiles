@@ -9,6 +9,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# UV (Python package manager) initialization
+if [ -f "$HOME/.local/bin/env" ]; then
+  . "$HOME/.local/bin/env"
+fi
+
 # Git aliases
 alias gs='git status'
 alias ga='git add'
@@ -18,6 +23,12 @@ alias gl='git log --oneline --graph --decorate --all'
 alias gd='git diff'
 alias gb='git branch'
 alias gco='git checkout'
+
+# UV aliases
+alias uvvenv='uv venv'
+alias uvrun='uv run'
+alias uvsync='uv sync'
+alias uvadd='uv add'
 
 # Function to show current git branch in prompt
 git_branch() {

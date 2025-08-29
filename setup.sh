@@ -11,13 +11,36 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   brew install git zsh vim tmux
+  
+  # Install UV (Python package manager)
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "Installing UV..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo "UV installed successfully!"
+    echo "Please restart your terminal or run 'source ~/.zshrc' to activate UV"
+  else
+    echo "UV is already installed"
+  fi
+  
 elif [[ -f /etc/debian_version ]]; then
   # Ubuntu/Debian
   echo "Detected Ubuntu/Debian"
   sudo apt update
-  sudo apt install -y git zsh vim tmux
+  sudo apt install -y git zsh vim tmux curl
+  
+  # Install UV (Python package manager)
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "Installing UV..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo "UV installed successfully!"
+    echo "Please restart your terminal or run 'source ~/.bashrc' to activate UV"
+  else
+    echo "UV is already installed"
+  fi
+  
 else
   echo "Unsupported OS. Please install git, zsh, vim, and tmux manually."
+  echo "For UV installation, visit: https://docs.astral.sh/uv/getting-started/installation/"
   exit 1
 fi
 
@@ -36,4 +59,16 @@ for file in .bashrc .vimrc .zshrc .tmux.conf .gitconfig; do
   fi
 done
 
-echo "Setup complete! Please restart your terminal or run 'source ~/.zshrc' or 'source ~/.bashrc' as needed." 
+echo ""
+echo "Setup complete! 🎉"
+echo ""
+echo "What was installed:"
+echo "  ✅ Git, Zsh, Vim, Tmux"
+echo "  ✅ UV (Python package manager)"
+echo "  ✅ Dotfiles configuration"
+echo ""
+echo "Next steps:"
+echo "  1. Restart your terminal"
+echo "  2. Or run: source ~/.zshrc (for zsh) or source ~/.bashrc (for bash)"
+echo "  3. Test UV: uv --version"
+echo "  4. Create a new project: uv init myproject" 

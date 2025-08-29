@@ -18,6 +18,7 @@ chmod +x setup.sh
 - Detect your OS (macOS or Ubuntu/Debian)
 - Install Homebrew (if not already installed) and required packages on macOS
 - Install required packages using apt on Ubuntu/Debian
+- **Install UV (Python package manager)** - Modern, fast alternative to pip
 - Copy .bashrc, .vimrc, .zshrc, .tmux.conf, and .gitconfig to your home directory
 
 > For other Linux distributions, please install git, zsh, vim, and tmux manually, then run the script to copy dotfiles.
@@ -28,6 +29,43 @@ After running the script, restart your terminal or run:
 source ~/.zshrc   # for zsh
 source ~/.bashrc  # for bash
 ```
+
+---
+
+## ⚡ UV (Python Package Manager)
+
+**UV** is a modern, fast Python package manager that replaces pip and virtualenv.
+
+### **Features:**
+- **🚀 10-100x faster** than pip
+- **🔄 Smart caching** between projects
+- **📦 Modern packaging** with pyproject.toml
+- **🔒 Reliable** dependency resolution
+- **📱 Lightweight** installation
+
+### **Quick Start with UV:**
+```bash
+# Create new project
+uv init myproject
+cd myproject
+
+# Add dependencies
+uv add fastapi
+uv add --dev pytest
+
+# Run commands
+uv run python main.py
+uv run pytest
+
+# Sync dependencies
+uv sync
+```
+
+### **UV Aliases (added to shell configs):**
+- `uvvenv` → `uv venv` (create virtual environment)
+- `uvrun` → `uv run` (run commands in environment)
+- `uvsync` → `uv sync` (install all dependencies)
+- `uvadd` → `uv add` (add new dependency)
 
 ---
 
@@ -42,6 +80,7 @@ source ~/.bashrc  # for bash
   - **History settings:** Controls how many commands are remembered and how duplicates are handled.
   - **Bash completion:** Enables tab completion for many commands.
   - **Default editor:** Sets `vim` as the default editor.
+  - **UV initialization:** Automatically loads UV environment and adds aliases.
 
 > **Note:** After editing `.bashrc`, reload your shell or run `source ~/.bashrc` to activate changes.
 
@@ -52,6 +91,7 @@ source ~/.bashrc  # for bash
 - **Shell configuration for zsh**
 - **Key sections:**
   - **Homebrew initialization:** Adds Homebrew to your PATH if installed.
+  - **UV initialization:** Automatically loads UV environment and adds aliases.
   - **Aliases:** Shortcuts for `ls` and `tmux`.
   - **Prompt:** Username (green), git branch (cyan), working directory (blue), arrow (cyan).
   - **Git branch in prompt:** Uses `vcs_info` to show the current git branch.
