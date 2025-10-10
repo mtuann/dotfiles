@@ -29,6 +29,8 @@ alias uvvenv='uv venv'
 alias uvrun='uv run'
 alias uvsync='uv sync'
 alias uvadd='uv add'
+alias uva='source .venv/bin/activate'
+alias uvd='deactivate'
 
 # Function to show current git branch in prompt
 git_branch() {
@@ -57,7 +59,7 @@ unset __conda_setup
 PS1="${CONDA_DEFAULT_ENV:+($CONDA_DEFAULT_ENV) }\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w  \[\e[0m\]\[\e[1;36m\]->  \[\e[0m\]\[\e[1;33m\]\$(git_branch)\[\e[0m\]\$ "
 
 # History settings
-HISTSIZE=1000
+HISTSIZE=10000
 HISTFILESIZE=2000
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend

@@ -31,6 +31,8 @@ alias uvvenv='uv venv'
 alias uvrun='uv run'
 alias uvsync='uv sync'
 alias uvadd='uv add'
+alias uva='source .venv/bin/activate'
+alias uvd='deactivate'
 
 # History settings (equivalent to Bash .bashrc)
 HISTSIZE=10000
