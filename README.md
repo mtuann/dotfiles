@@ -158,6 +158,7 @@ source ~/.zshrc    # or restart your terminal
 
 # For .vimrc
 # Restart Vim to see the changes
+source ~/.vimrc
 
 # For .tmux.conf
 # Inside tmux, press <prefix> + r to reload, or restart tmux
