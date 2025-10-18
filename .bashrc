@@ -32,6 +32,13 @@ alias uvadd='uv add'
 alias uva='source .venv/bin/activate'
 alias uvd='deactivate'
 
+# Tmux aliases
+alias ta='tmux attach -t'
+alias tn='tmux new -s'
+alias tl='tmux ls'
+alias tk='tmux kill-session -t'
+alias tka='tmux kill-server'
+
 # Function to show current git branch in prompt
 git_branch() {
   branch=$(git symbolic-ref --short HEAD 2>/dev/null)
