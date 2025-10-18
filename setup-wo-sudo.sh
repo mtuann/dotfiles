@@ -25,8 +25,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif [[ -f /etc/debian_version ]]; then
   # Ubuntu/Debian
   echo "Detected Ubuntu/Debian"
-  sudo apt update
-  sudo apt install -y git zsh vim tmux curl
+  echo "⚠️ 'sudo' commands for package installation are removed."
+  echo "Please install git, zsh, vim, tmux, curl manually or via conda/nix."
   
   # Install UV (Python package manager)
   if ! command -v uv >/dev/null 2>&1; then
@@ -59,11 +59,34 @@ for file in .bashrc .vimrc .zshrc .tmux.conf .gitconfig; do
   fi
 done
 
+# Reload shell config based on current shell
+CURRENT_SHELL=$(basename $SHELL)
+
+case "$CURRENT_SHELL" in
+  bash)
+    echo "Sourcing ~/.bashrc"
+    source ~/.bashrc
+    ;;
+  zsh)
+    echo "Sourcing ~/.zshrc"
+    source ~/.zshrc
+    ;;
+  *)
+    echo "Unsupported shell: $CURRENT_SHELL. Please source your shell config manually."
+    ;;
+esac
+
+# Reload tmux config if tmux is running
+if command -v tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
+  echo "Reloading tmux config..."
+  tmux source-file ~/.tmux.conf
+fi
+
 echo ""
 echo "Setup complete! 🎉"
 echo ""
 echo "What was installed:"
-echo "  ✅ Git, Zsh, Vim, Tmux"
+echo "  ✅ Git, Zsh, Vim, Tmux (on macOS via brew)"
 echo "  ✅ UV (Python package manager)"
 echo "  ✅ Dotfiles configuration"
 echo ""
@@ -71,4 +94,4 @@ echo "Next steps:"
 echo "  1. Restart your terminal"
 echo "  2. Or run: source ~/.zshrc (for zsh) or source ~/.bashrc (for bash)"
 echo "  3. Test UV: uv --version"
-echo "  4. Create a new project: uv init myproject" 
+echo "  4. Create a new project: uv init myproject"
