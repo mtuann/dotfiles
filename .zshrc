@@ -12,9 +12,12 @@ fi
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 alias ls='ls -GF'
-alias ll="ls -alt"
-alias la="ls -l"
-alias tmux='tmux -u -2'
+alias ll="ls -haltF"
+alias lf="ls -halSF"
+alias la="ls -A"
+alias l='ls -CF'
+
+
 
 # Git aliases
 alias gs='git status'
@@ -35,6 +38,7 @@ alias uva='source .venv/bin/activate'
 alias uvd='deactivate'
 
 # Tmux aliases
+alias tmux='tmux -u -2'
 alias ta='tmux attach -t'
 alias tn='tmux new -s'
 alias tl='tmux ls'

@@ -5,7 +5,8 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
 alias ls='ls --color=auto'
-alias ll='ls -alF'
+alias ll='ls -haltF'
+alias lf="ls -halSF"
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -33,6 +34,7 @@ alias uva='source .venv/bin/activate'
 alias uvd='deactivate'
 
 # Tmux aliases
+alias tmux='tmux -u -2'
 alias ta='tmux attach -t'
 alias tn='tmux new -s'
 alias tl='tmux ls'
