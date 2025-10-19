@@ -1,13 +1,49 @@
 [user]
 	name = mtuann
 	email = mtuann4@gmail.com
+
 [color]
-	ui = auto
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = green
+    remote = green dim
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = green
+    changed = yellow
+    untracked = red
+
 [core]
-	editor = vim
+    editor = vim
+    
+[init]
+    defaultBranch = main
+
 [alias]
-	st = status
-	co = checkout
-	br = branch
-	cm = commit
-	lg = log --oneline --graph --decorate --all 
+    st = status
+    co = checkout
+    br = branch
+    cm = commit
+    # “lg” for a pretty, graph‑style log
+    lg = log --graph --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    hist = log --graph --decorate --oneline --abbrev-commit
+    d = diff
+    dc = diff --cached
+    dw = diff -w      # diff ignoring whitespace changes
+    showf = show --format=fuller
+
+[diff]
+    mnemonicprefix = true
+    compactionHeuristic = true
