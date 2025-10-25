@@ -17,8 +17,6 @@ alias lf="ls -halSF"
 alias la="ls -A"
 alias l='ls -CF'
 
-
-
 # Git aliases
 alias gs='git status'
 alias ga='git add'
