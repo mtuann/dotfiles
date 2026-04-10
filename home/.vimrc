@@ -2,6 +2,8 @@
 
 " Enable syntax highlighting
 syntax on
+" Enable filetype detection plus language-aware plugins and indentation rules
+filetype plugin indent on
 colorscheme desert
 
 " Set indentation to 4 spaces, use spaces instead of tabs

@@ -1,6 +1,11 @@
-[user]
-	name = mtuann
-	email = mtuann4@gmail.com
+# Keep user-specific identity outside the shared dotfiles repo.
+[include]
+    path = ~/.gitconfig.local
+
+# Example ~/.gitconfig.local:
+# [user]
+#     name = Your Name
+#     email = you@example.com
 
 [color]
     ui = auto
@@ -27,7 +32,7 @@
 
 [core]
     editor = vim
-    
+
 [init]
     defaultBranch = main
 
@@ -36,7 +41,7 @@
     co = checkout
     br = branch
     cm = commit
-    # “lg” for a pretty, graph‑style log
+    # "lg" for a pretty, graph-style log
     lg = log --graph --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     hist = log --graph --decorate --oneline --abbrev-commit
     d = diff

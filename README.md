@@ -1,179 +1,58 @@
-# Dotfiles Setup and Explanation
+# Dotfiles
 
-This folder contains configuration files (dotfiles) for customizing your Unix-like shell environment, editor, and terminal multiplexer. Each file is explained below so you can understand and further customize your setup.
+What is in this repo:
 
----
+- `home/`: stow package containing the dotfiles that get linked into `$HOME`
+- `home/.bashrc`: Bash-specific shell config
+- `home/.zshrc`: Zsh-specific shell config
+- `home/shell_common.sh`: shared aliases, helpers, and shell setup used by Bash and Zsh
+- `home/.vimrc`: basic Vim config
+- `home/.tmux.conf`: basic tmux config
+- `home/.gitconfig`: basic Git config
+- `setup.sh`: installs required packages and links dotfiles into `$HOME`
+- `jupyter.sh`: creates or updates a Conda environment for local/Jupyter use
+- `README.md`: quick usage notes
 
-## 🚀 Quick Install (setup.sh)
-
-Clone this repository and run the setup script to install dependencies and copy dotfiles to your home directory:
+Setup:
 
 ```sh
-cd ~/Desktop/work/dotfiles
-chmod +x setup.sh
+git clone https://github.com/mtuann/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 ./setup.sh
 ```
 
-**The script will:**
-- Detect your OS (macOS or Ubuntu/Debian)
-- Install Homebrew (if not already installed) and required packages on macOS
-- Install required packages using apt on Ubuntu/Debian
-- **Install UV (Python package manager)** - Modern, fast alternative to pip
-- Copy .bashrc, .vimrc, .zshrc, .tmux.conf, and .gitconfig to your home directory
-
-> For other Linux distributions, please install git, zsh, vim, and tmux manually, then run the script to copy dotfiles.
-
-After running the script, restart your terminal or run:
+Without `sudo` on Debian/Ubuntu:
 
 ```sh
-source ~/.zshrc   # for zsh
-source ~/.bashrc  # for bash
+./setup.sh --no-sudo
 ```
 
----
-
-## ⚡ UV (Python Package Manager)
-
-**UV** is a modern, fast Python package manager that replaces pip and virtualenv.
-
-### **Features:**
-- **🚀 10-100x faster** than pip
-- **🔄 Smart caching** between projects
-- **📦 Modern packaging** with pyproject.toml
-- **🔒 Reliable** dependency resolution
-- **📱 Lightweight** installation
-
-### **Quick Start with UV:**
-```bash
-# Create new project
-uv init myproject
-cd myproject
-
-# Add dependencies
-uv add fastapi
-uv add --dev pytest
-
-# Run commands
-uv run python main.py
-uv run pytest
-
-# Sync dependencies
-uv sync
-```
-
-### **UV Aliases (added to shell configs):**
-- `uvvenv` → `uv venv` (create virtual environment)
-- `uvrun` → `uv run` (run commands in environment)
-- `uvsync` → `uv sync` (install all dependencies)
-- `uvadd` → `uv add` (add new dependency)
-
----
-
-## 🐚 .bashrc
-
-- **Shell configuration for bash**
-- **Key sections:**
-  - **Conda environment in prompt:** Shows the active conda environment (e.g., `(base)`).
-  - **Colored prompt:** Username (green), working directory (blue), arrow (cyan), git branch (yellow).
-  - **Aliases:** Shortcuts for common `ls` and `git` commands.
-  - **Git branch in prompt:** Shows current git branch if in a git repo.
-  - **History settings:** Controls how many commands are remembered and how duplicates are handled.
-  - **Bash completion:** Enables tab completion for many commands.
-  - **Default editor:** Sets `vim` as the default editor.
-  - **UV initialization:** Automatically loads UV environment and adds aliases.
-
-> **Note:** After editing `.bashrc`, reload your shell or run `source ~/.bashrc` to activate changes.
-
----
-
-## 🐚 .zshrc
-
-- **Shell configuration for zsh**
-- **Key sections:**
-  - **Homebrew initialization:** Adds Homebrew to your PATH if installed.
-  - **UV initialization:** Automatically loads UV environment and adds aliases.
-  - **Aliases:** Shortcuts for `ls` and `tmux`.
-  - **Prompt:** Username (green), git branch (cyan), working directory (blue), arrow (cyan).
-  - **Git branch in prompt:** Uses `vcs_info` to show the current git branch.
-  - **Conda initialization:** Activates conda environments and shows them in the prompt.
-
-> **Note:** After editing `.zshrc`, reload your shell or run `source ~/.zshrc` to activate changes.
-
----
-
-## 📝 .vimrc
-
-- **Vim editor configuration**
-- **Key sections:**
-  - **Syntax highlighting:** Enables color and syntax for code.
-  - **Colorscheme:** Uses the built-in `desert` theme for readability.
-  - **Indentation:** 4 spaces per tab, spaces instead of tabs.
-  - **Line numbers and ruler:** Shows line numbers and cursor position.
-  - **Search enhancements:** Highlights search results, incremental search, smart case.
-  - **Status line:** Shows file info, type, position, and length.
-  - **(Optional) Mouse and clipboard:** Can enable mouse and system clipboard support.
-
-> **Note:** After editing `.vimrc`, restart Vim to see the changes.
-
----
-
-## 🖥️ .tmux.conf
-
-- **tmux terminal multiplexer configuration**
-- **Key sections:**
-  - **Prefix key:** Set to `` ` `` instead of default `Ctrl-b`.
-  - **Mouse support:** Allows mouse for pane selection and resizing.
-  - **256-color support:** Ensures color schemes display correctly.
-  - **Status bar:** Shows at the bottom, with date and time, and custom colors.
-  - **Vi mode:** Enables vi-style keybindings in copy mode.
-  - **Pane/window management:** Easy splitting and navigation.
-
-> **Note:** After editing `.tmux.conf`, reload the config in tmux with `<prefix> + r` or restart tmux.
-
----
-
-## 📥 Copy Your Dotfiles Here
-
-To back up your current configuration files to this folder, run:
-
-```bash
-mkdir -p ~/Desktop/work/dotfiles
-cp ~/.bashrc ~/.vimrc ~/.zshrc ~/.tmux.conf ~/Desktop/work/dotfiles/
-```
-
-This will copy your existing dotfiles into the `dotfiles` folder for version control or sharing.
-
----
-
-## ⚡ Activating Changes
-
-To apply changes after editing your dotfiles, use the following commands or actions:
+Conda env:
 
 ```sh
-# For .bashrc
-source ~/.bashrc   # or restart your terminal
-
-# For .zshrc
-source ~/.zshrc    # or restart your terminal
-
-# For .vimrc
-# Restart Vim to see the changes
-source ~/.vimrc
-
-# For .tmux.conf
-# Inside tmux, press <prefix> + r to reload, or restart tmux
-tmux source-file ~/.tmux.conf
+./jupyter.sh
+./jupyter.sh --local
 ```
 
-> **Tip:** Always reload or restart the relevant application or shell after editing its config file to ensure your changes take effect.
+Custom env:
 
----
+```sh
+./jupyter.sh --name myenv
+./jupyter.sh --path ~/envs/myenv
+```
 
-## How to Use
+`setup.sh` links files from `~/dotfiles/home` into `$HOME`.
+If `stow` is available it uses `stow`; otherwise it falls back to plain symlinks.
 
-1. Copy these files to your home directory (or symlink them for version control).
-2. Reload your shell or source the relevant file (e.g., `source ~/.bashrc`).
-3. Open a new terminal or Vim/tmux session to see the changes.
+If you want Git identity in this setup, create `~/.gitconfig.local`:
 
-Feel free to further customize these files to match your workflow!
+```sh
+cat > ~/.gitconfig.local <<'GITCONFIG'
+[user]
+    name = Your Name
+    email = you@example.com
+GITCONFIG
+```
 
+This file is optional, stays outside the repo, and is not managed by the dotfiles symlink setup.
+If you already have `~/.gitconfig`, `setup.sh` will copy it to `~/.gitconfig.local` on first setup.
