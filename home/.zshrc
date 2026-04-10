@@ -16,4 +16,4 @@ setopt PROMPT_SUBST
 dotfiles_init_conda zsh
 
 # Show conda env, user, working directory, and git branch in the prompt.
-PROMPT='${CONDA_DEFAULT_ENV:+($CONDA_DEFAULT_ENV) }%B%F{green}%n%f:%F{blue}%~%f  %F{cyan}->  %F{yellow}$(git_branch)%f%b %# '
+PROMPT='${CONDA_DEFAULT_ENV:+($CONDA_DEFAULT_ENV) }%B%F{green}%n%f:%F{blue}%~%f  %F{cyan}->  %F{yellow}$(git_branch)%f%b %(#.#.$) '
