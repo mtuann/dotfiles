@@ -9,9 +9,11 @@ ALLOW_SUDO=1
 PACKAGE_STATUS=""
 UV_STATUS=""
 LINK_STATUS=""
+CONDA_STATUS=""
+NVITOP_STATUS=""
 DOTFILES_PACKAGE="home"
 DOTFILES_PACKAGE_DIR="$SCRIPT_DIR/$DOTFILES_PACKAGE"
-DOTFILES_FILES=(.bashrc .zshrc .vimrc .tmux.conf .gitconfig shell_common.sh)
+DOTFILES_FILES=(.bash_profile .bashrc .zshrc .vimrc .tmux.conf .gitconfig shell_common.sh)
 
 # Pick the shell rc file to reference in post-install messages.
 case "$CURRENT_SHELL" in
@@ -133,6 +135,97 @@ install_uv() {
   UV_STATUS="Installed UV"
 }
 
+find_conda() {
+  local conda_bin resolved_conda
+
+  resolved_conda="$(command -v conda 2>/dev/null || true)"
+  for conda_bin in \
+    "${CONDA_EXE:-}" \
+    "$HOME/miniconda3/bin/conda" \
+    "$HOME/anaconda3/bin/conda" \
+    /opt/conda/bin/conda \
+    "$resolved_conda"
+  do
+    case "$conda_bin" in
+      */conda)
+        if [ -x "$conda_bin" ]; then
+          printf '%s\n' "$conda_bin"
+          return 0
+        fi
+        ;;
+    esac
+  done
+
+  return 1
+}
+
+miniconda_installer_url() {
+  local os arch
+
+  os="$(uname -s)"
+  arch="$(uname -m)"
+
+  case "$os:$arch" in
+    Darwin:arm64)
+      printf '%s\n' "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh"
+      ;;
+    Darwin:x86_64)
+      printf '%s\n' "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
+      ;;
+    Linux:x86_64)
+      printf '%s\n' "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+      ;;
+    Linux:aarch64|Linux:arm64)
+      printf '%s\n' "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh"
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+install_miniconda_if_needed() {
+  local conda_bin installer_url installer_path
+
+  if conda_bin="$(find_conda)"; then
+    CONDA_STATUS="Conda already installed at $conda_bin"
+  else
+    if ! command -v curl >/dev/null 2>&1; then
+      echo "curl is required to install Miniconda automatically. Skipping Miniconda install."
+      CONDA_STATUS="Miniconda skipped (curl not found)"
+      NVITOP_STATUS="nvitop skipped (conda not found)"
+      return 0
+    fi
+
+    installer_url="$(miniconda_installer_url)" || {
+      echo "Unsupported platform for automatic Miniconda install: $(uname -s) $(uname -m)"
+      CONDA_STATUS="Miniconda skipped (unsupported platform)"
+      NVITOP_STATUS="nvitop skipped (conda not found)"
+      return 0
+    }
+
+    installer_path="$(mktemp "${TMPDIR:-/tmp}/miniconda.XXXXXX.sh")"
+    echo "Installing Miniconda to $HOME/miniconda3..."
+    curl -fsSL "$installer_url" -o "$installer_path"
+    bash "$installer_path" -b -p "$HOME/miniconda3"
+    rm -f "$installer_path"
+    conda_bin="$HOME/miniconda3/bin/conda"
+    CONDA_STATUS="Installed Miniconda at $HOME/miniconda3"
+  fi
+
+  "$conda_bin" config --set auto_activate_base true
+  CONDA_STATUS="$CONDA_STATUS; base auto-activation enabled"
+
+  if "$conda_bin" run -n base nvitop --version >/dev/null 2>&1; then
+    NVITOP_STATUS="nvitop already installed in Conda base"
+    return 0
+  fi
+
+  echo "Installing nvitop into the Conda base environment..."
+  "$conda_bin" install -n base -c conda-forge nvitop -y
+  NVITOP_STATUS="Installed nvitop in Conda base"
+}
+
 # Preserve existing files before replacing them with links.
 backup_conflicting_targets() {
   local file
@@ -246,6 +339,7 @@ EOF
 # Run the full setup flow.
 install_packages
 install_uv
+install_miniconda_if_needed
 link_dotfiles
 reload_tmux_if_running
 print_git_identity_hint
@@ -256,6 +350,8 @@ echo ""
 echo "What was configured:"
 echo "  $PACKAGE_STATUS"
 echo "  $UV_STATUS"
+echo "  $CONDA_STATUS"
+echo "  $NVITOP_STATUS"
 echo "  $LINK_STATUS"
 echo "  Dotfiles source: $DOTFILES_PACKAGE_DIR"
 echo ""
