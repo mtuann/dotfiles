@@ -213,7 +213,7 @@ install_miniconda_if_needed() {
     CONDA_STATUS="Installed Miniconda at $HOME/miniconda3"
   fi
 
-  "$conda_bin" config --set auto_activate_base true
+  "$conda_bin" config --set auto_activate true
   CONDA_STATUS="$CONDA_STATUS; base auto-activation enabled"
 
   if "$conda_bin" run -n base nvitop --version >/dev/null 2>&1; then
