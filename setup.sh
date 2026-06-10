@@ -222,7 +222,7 @@ install_miniconda_if_needed() {
   fi
 
   echo "Installing nvitop into the Conda base environment..."
-  "$conda_bin" install -n base -c conda-forge nvitop -y
+  "$conda_bin" install -n base --override-channels -c conda-forge nvitop -y
   NVITOP_STATUS="Installed nvitop in Conda base"
 }
 

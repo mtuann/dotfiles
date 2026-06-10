@@ -26,6 +26,8 @@ cd ~/dotfiles
 is missing, links the dotfiles into `$HOME`, installs Miniconda when no Conda
 installation is found, enables automatic `base` activation, and installs
 `nvitop` into the Conda `base` environment only when it is not already present.
+Conda package installs use `conda-forge` with `--override-channels` so fresh
+Miniconda installs do not require accepting Anaconda's default-channel terms.
 Bash and Zsh both load the shared `home/shell_common.sh`, where `nvi` is
 aliased to `nvitop`.
 

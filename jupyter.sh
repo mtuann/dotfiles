@@ -128,14 +128,14 @@ ENV_CREATED=0
 if [ "$ENV_MODE" = "name" ]; then
   echo "=== Creating conda environment: $ENV_NAME (if it doesn't exist) ==="
   if ! conda env list | awk '{print $1}' | grep -qx "$ENV_NAME"; then
-    conda create -n "$ENV_NAME" -c conda-forge "${PACKAGES[@]}" -y
+    conda create -n "$ENV_NAME" --override-channels -c conda-forge "${PACKAGES[@]}" -y
     ENV_CREATED=1
   fi
 else
   echo "=== Creating conda environment at: $ENV_PATH_DISPLAY (if it doesn't exist) ==="
   if [ ! -d "$ENV_PATH/conda-meta" ]; then
     mkdir -p "$(dirname "$ENV_PATH")"
-    conda create -p "$ENV_PATH" -c conda-forge "${PACKAGES[@]}" -y
+    conda create -p "$ENV_PATH" --override-channels -c conda-forge "${PACKAGES[@]}" -y
     ENV_CREATED=1
   else
     echo "Conda environment already exists at $ENV_PATH_DISPLAY"
@@ -148,7 +148,7 @@ conda activate "$ACTIVATE_TARGET"
 
 if [ "$ENV_CREATED" -eq 0 ]; then
   echo "=== Installing packages (git, zsh, vim, tmux, curl) from conda-forge ==="
-  conda install -c conda-forge "${PACKAGES[@]}" -y
+  conda install --override-channels -c conda-forge "${PACKAGES[@]}" -y
 fi
 
 # Print the final activation hints for interactive use.
