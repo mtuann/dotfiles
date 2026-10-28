@@ -12,8 +12,14 @@ shopt -s histappend
 # Load conda's Bash hook when conda is installed so "conda activate" works.
 dotfiles_init_conda bash
 
-# Show conda env, user, working directory, and git branch in the prompt.
-PS1="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w  \[\e[0m\]\[\e[1;36m\]->  \[\e[0m\]\[\e[1;33m\]\$(git_branch)\[\e[0m\]\$ "
+# Time each command: the DEBUG trap records the start, the prompt hook records the duration.
+_dot_timer_start() { _dot_start="${_dot_start:-$SECONDS}"; }
+_dot_timer_stop() { _dot_took=$((SECONDS - ${_dot_start:-$SECONDS})); unset _dot_start; }
+trap '_dot_timer_start' DEBUG
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }_dot_timer_stop"
+
+# Show conda env, user, working directory, git branch, and slow-command time in the prompt.
+PS1="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w  \[\e[0m\]\[\e[1;36m\]->  \[\e[0m\]\[\e[1;33m\]\$(git_branch)\[\e[1;35m\]\$(cmd_time)\[\e[0m\]\$ "
 
 # Enable system bash completion when it is available.
 if [ -f /etc/bash_completion ]; then

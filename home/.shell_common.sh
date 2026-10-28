@@ -79,6 +79,16 @@ git_branch() {
   [ -n "$branch" ] && printf ' (git:%s)' "$branch"
 }
 
+# Duration of the last command (set by the bash/zsh hooks), shown when >= DOTFILES_CMD_TIME_MIN seconds.
+cmd_time() {
+  local s="${_dot_took:-0}"
+  [ "$s" -ge "${DOTFILES_CMD_TIME_MIN:-2}" ] || return 0
+  if [ "$s" -ge 3600 ]; then printf ' took %dh%dm' $((s / 3600)) $((s % 3600 / 60))
+  elif [ "$s" -ge 60 ]; then printf ' took %dm%ds' $((s / 60)) $((s % 60))
+  else printf ' took %ds' "$s"
+  fi
+}
+
 dotfiles_init_homebrew
 dotfiles_source_if_exists "$HOME/.local/bin/env"
 
